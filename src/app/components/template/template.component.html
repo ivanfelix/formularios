@@ -1,8 +1,8 @@
 <h4>Formularios <small>template</small></h4>
 <hr>
-<form #forma="ngForm" ngForm="forma" (ngSubmit)="guardar(forma)" >
+<form #forma="ngForm" ngForm="forma" (ngSubmit)="guardar(forma)" class="was-validated" novalidate>
   <div>
-    <div class="form-group row">
+    <div class="form-group row has-danger">
       <label class="col-2 col-form-label">Nombre</label>
       <div class="col-8">
         <input
@@ -14,7 +14,7 @@
           #nombre="ngModel"
           required
         >
-        <div *ngIf="nombre.errors?.required">
+        <div *ngIf="nombre.errors?.required" class="invalid-feedback">
           Campo requerido.
         </div>
       </div>
@@ -31,7 +31,7 @@
           #apellido="ngModel"
           required
         >
-        <div *ngIf="apellido.errors?.required">
+        <div class="invalid-feedback" *ngIf="apellido.errors?.required">
           Campo requerido.
         </div>
       </div>
@@ -50,20 +50,39 @@
           required
           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
       >
-      <div *ngIf="email.errors?.required">
+      <div class="invalid-feedback" *ngIf="email.errors?.required">
         Campo requerido.
       </div>
-      <div *ngIf="email.errors?.pattern">
+      <div class="invalid-feedback" *ngIf="email.errors?.pattern">
         Ingresa un email válido
       </div>
     </div>
   </div>
   <div class="form-group row">
+      <label class="col-2 col-form-label">Pais</label>
+      <div class="col-md-8">
+        <select name="pais" #pais="ngModel" [(ngModel)]="usuario.pais" class="form-control" >
+          <option value="">Seleccione un país</option>
+          <option *ngFor="let pais of paises" [value]="pais.codigo">{{pais.pais}}</option>
+        </select>
+        <div class="invalid-feedback" *ngIf="email.errors?.required">
+          Campo requerido.
+        </div>
+      </div>
+    </div>
+  <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
     <div class="input-group col-md-8">
-      <button type="submit" class="btn btn-outline-primary">
+      <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
         Guardar
       </button>
     </div>
   </div>
+  <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+          <input type="radio" aria-label="Radio button for following text input">
+        </div>
+      </div>
+    </div>
 </form>
